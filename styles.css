@@ -1,0 +1,101 @@
+/* body {
+    background: #f8f6f0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+*/
+
+.container {
+    max-width: 400px;
+    margin: 40px auto;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+    padding: 32px 24px;
+} 
+
+
+h1 {
+    text-align: center;
+    color: #7b3f00;
+    margin-bottom: 24px;
+}
+
+.form-group {
+    margin-bottom: 18px;
+}
+
+
+label {
+    display: block;
+    margin-bottom: 6px;
+    color: #333;
+    font-weight: 500;
+}
+
+/*
+
+input[type="text"], select {
+    width: 100%;
+    padding: 8px 10px;
+    border: 1px solid #d1bfa7;
+    border-radius: 6px;
+    font-size: 1rem;
+    background: #f9f7f3;
+    margin-bottom: 4px;
+}
+
+.checkbox-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.checkbox-group label {
+    font-weight: 400;
+    color: #5a4632;
+}
+
+button[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    background: #7b3f00;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+button[type="submit"]:hover {
+    background: #a05a1c;
+}
+
+.order-summary {
+    margin-top: 28px;
+    background: #f3e7d9;
+    border-radius: 8px;
+    padding: 18px 14px;
+    color: #4b2e05;
+    box-shadow: 0 2px 8px rgba(123,63,0,0.06);
+}
+
+.order-summary h2 {
+    margin-top: 0;
+    color: #7b3f00;
+    font-size: 1.2rem;
+}  */
+
+.cake-image {
+    width: 250px;         /* Set your desired width */
+    height: 180px;        /* Set your desired height */
+    object-fit: cover;    /* Ensures the image fills the box and is not distorted */
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    margin-bottom: 10px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}

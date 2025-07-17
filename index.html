@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cake Order System</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Order Your Cake</h1>
+        <form id="cakeOrderForm">
+            <div class="form-group">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            <div class="form-group">
+                <label for="contact">Contact Info:</label>
+                <input type="text" id="contact" name="contact" required>
+            </div>
+            <div class="form-group">
+                <label for="cakeType">Cake Type:</label>
+                <select id="cakeType" name="cakeType" required>
+                    <option value="Chocolate">Chocolate</option>
+                    <option value="Vanilla">Vanilla</option>
+                    <option value="Red Velvet">Red Velvet</option>
+                    <option value="Carrot">Carrot</option>
+                </select>
+            </div>
+            <div class="form-group" style="text-align:center;">
+                <img id="cakeImage" class="cake-image" src="images/chocolate.png" alt="Cake Image" />
+            </div>
+            <div class="form-group">
+                <label for="cakeSize">Cake Size:</label>
+                <select id="cakeSize" name="cakeSize" required>
+                    <option value="Small">Small</option>
+                    <option value="Medium">Medium</option>
+                    <option value="Large">Large</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Add-ons:</label>
+                <div class="checkbox-group">
+                    <label><input type="checkbox" name="addons" value="Sprinkles"> Sprinkles (+$2)</label>
+                    <label><input type="checkbox" name="addons" value="Fruit"> Fruit (+$3)</label>
+                    <label><input type="checkbox" name="addons" value="Nuts"> Nuts (+$2)</label>
+                    <label><input type="checkbox" name="addons" value="Chocolate Chips"> Chocolate Chips (+$1)</label>
+                </div>
+            </div>
+            <div class="form-group" id="priceDisplay" style="text-align:center; font-weight:bold; color:#7b3f00;">
+                Price: $<span id="cakePrice">20</span>
+            </div>
+            <button type="submit">Submit Order</button>
+        </form>
+        <div id="orderSummary" class="order-summary" style="display:none;">
+            <h2>Order Summary</h2>
+            <p id="summaryText"></p>
+        </div>
+    </div>
+    <script>
+        const form = document.getElementById('cakeOrderForm');
+        const summary = document.getElementById('orderSummary');
+        const summaryText = document.getElementById('summaryText');
+        const cakeTypeSelect = document.getElementById('cakeType');
+        const cakeSizeSelect = document.getElementById('cakeSize');
+        const cakeImage = document.getElementById('cakeImage');
+        const cakePriceSpan = document.getElementById('cakePrice');
+
+        const cakeImages = {
+            'Chocolate': 'images/chocolate.png',
+            'Vanilla': 'images/vanilla.png',
+            'Red Velvet': 'images/redvelvet.png',
+            'Carrot': 'images/carrot.png'
+        };
+
+        const cakePrices = {
+            'Chocolate':   { Small: 20, Medium: 30, Large: 40 },
+            'Vanilla':     { Small: 18, Medium: 28, Large: 38 },
+            'Red Velvet':  { Small: 22, Medium: 32, Large: 42 },
+            'Carrot':      { Small: 19, Medium: 29, Large: 39 }
+        };
+
+        const addonPrices = {
+            'Sprinkles': 2,
+            'Fruit': 3,
+            'Nuts': 2,
+            'Chocolate Chips': 1
+        };
+
+        function getSelectedAddons() {
+            return Array.from(form.querySelectorAll('input[name="addons"]:checked')).map(cb => cb.value);
+        }
+
+        function calculateTotalPrice() {
+            const type = cakeTypeSelect.value;
+            const size = cakeSizeSelect.value;
+            const basePrice = cakePrices[type][size];
+            const addons = getSelectedAddons();
+            const addonsTotal = addons.reduce((sum, addon) => sum + (addonPrices[addon] || 0), 0);
+            return basePrice + addonsTotal;
+        }
+
+        function updatePrice() {
+            cakePriceSpan.textContent = calculateTotalPrice();
+        }
+
+        cakeTypeSelect.addEventListener('change', function() {
+            const selected = cakeTypeSelect.value;
+            cakeImage.src = cakeImages[selected] || 'images/chocolate.png';
+            cakeImage.alt = selected + ' Cake';
+            updatePrice();
+        });
+        cakeSizeSelect.addEventListener('change', updatePrice);
+        form.querySelectorAll('input[name="addons"]').forEach(cb => {
+            cb.addEventListener('change', updatePrice);
+        });
+
+        // Call once on page load
+        updatePrice();
+
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const name = form.name.value;
+            const contact = form.contact.value;
+            const cakeType = form.cakeType.value;
+            const cakeSize = form.cakeSize.value;
+            const addons = getSelectedAddons();
+            let summaryStr = `<strong>Name:</strong> ${name}<br>`;
+            summaryStr += `<strong>Contact:</strong> ${contact}<br>`;
+            summaryStr += `<strong>Cake Type:</strong> ${cakeType}<br>`;
+            summaryStr += `<strong>Cake Size:</strong> ${cakeSize}<br>`;
+            summaryStr += `<strong>Add-ons:</strong> ${addons.length ? addons.join(', ') : 'None'}<br>`;
+            summaryStr += `<strong>Total Price:</strong> $${calculateTotalPrice()}<br>`;
+            summaryText.innerHTML = summaryStr;
+            summary.style.display = 'block';
+        });
+    </script>
+</html> 
