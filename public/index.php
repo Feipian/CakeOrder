@@ -1,36 +1,62 @@
 <?php
 session_start();
+
+// Database connection
+$host = 'localhost';
+$db = 'cake_shop'; // Change to your DB name
+$user = 'root';      // Change if not root
+$pass = '';
+$charset = 'utf8mb4';
+$dsn = "mysql:host=$host;dbname=$db;charset=$charset";
+$options = [
+    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+    PDO::ATTR_EMULATE_PREPARES => false,
+];
+
+try {
+    $pdo = new PDO($dsn, $user, $pass, $options);
+    $stmt = $pdo->query('SELECT * FROM products');
+    $products = $stmt->fetchAll();
+} catch (PDOException $e) {
+    die("Database error: " . $e->getMessage());
+}
 ?>
 <!DOCTYPE html>
 <html lang="zh-Hant">
+
 <head>
     <meta charset="UTF-8">
     <title>Cake Shop</title>
     <link rel="stylesheet" href="css/styles.css">
 </head>
+
 <body>
-<?php include_once("../templates/header.php"); ?>
+    <?php include_once("../templates/header.php"); ?>
 
-<main>
-    <h1>Welcome to Cake Shop!</h1>
-    <div class="product-list">
-        <!-- 範例蛋糕商品，實際可從資料庫撈取 -->
-        <div class="product-card">
-            <img src="assets/chocolate.png" alt="Chocolate Cake" class="product-img">
-            <h2>Chocolate Cake</h2>
-            <p>Rich and moist chocolate cake.</p>
-            <p class="price">$350</p>
+    <main>
+        <h1>Welcome to Cake Shop!</h1>
+        <div class="product-list">
+            <?php foreach ($products as $product): ?>
+                <div class="product-card">
+                    <img src="<?= htmlspecialchars($product['image']) ?>" alt="<?= htmlspecialchars($product['name']) ?>"
+                        class="product-img">
+                    <h2><?= htmlspecialchars($product['name']) ?></h2>
+                    <p><?= htmlspecialchars($product['description']) ?></p>
+                    <p class="price">$<?= htmlspecialchars($product['price']) ?></p>
+                    <form method="post" action="add_to_cart.php" style="display:flex;gap:0.5rem;align-items:center;">
+                        <input type="hidden" name="product_id" value="<?= $product['id'] ?>">
+                        <input type="hidden" name="product_name" value="<?= htmlspecialchars($product['name']) ?>">
+                        <input type="hidden" name="price" value="<?= $product['price'] ?>">
+                        <input type="number" name="quantity" value="1" min="1" style="width:60px;">
+                        <button type="submit" class="btn">Add to Cart</button>
+                    </form>
+                </div>
+            <?php endforeach; ?>
         </div>
-        <div class="product-card">
-            <img src="assets/Strawberry.jpg" alt="Strawberry Cake" class="product-img">
-            <h2>Strawberry Cake</h2>
-            <p>Fresh strawberries with cream.</p>
-            <p class="price">$400</p>
-        </div>
-        <!-- 更多蛋糕可依需求新增 -->
-    </div>
-</main>
+    </main>
 
-<?php include_once("../templates/footer.php"); ?>
+    <?php include_once("../templates/footer.php"); ?>
 </body>
+
 </html>
