@@ -6,5 +6,8 @@
     - [X] It cant remember previous cake quantity, otherwise it reset
     - [X] How to make some feature let it redirect to home page or Login , Register for buy cake??
     - [X] How to implement change cake quantity the total price will automate change??
+    - [ ] Does we have to save cart to database??
 - [ ] Telegram Bot
-- [ ] Logout.php
+- [X] Logout.php
+- [ ] Login by name or eamil
+- [ ] Can Choice add to cart or buy directly
