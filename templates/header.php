@@ -6,6 +6,7 @@
         </div>
         <div>
             <?php if (isset($_SESSION['customer_id'])): ?>
+                <a href="cart.php" class="btn">Cart</a>
                 <a href="my_orders.php" class="btn">My Orders</a>
                 <a href="logout.php" class="btn">Logout</a>
             <?php elseif (isset($_SESSION['staff_id'])): ?>

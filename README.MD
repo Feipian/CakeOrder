@@ -11,3 +11,8 @@
 - [X] Logout.php
 - [ ] Login by name or eamil
 - [ ] Can Choice add to cart or buy directly
+- [X] Index Page choice 2 quantity but to shoppy cart only add one
+- [ ] When i add some product, i dont want it redirect to my orders page
+    If let it redirect to my orders page will effect UX,
+so maybe let it keep at index page
+choice some next product, when he want to see what he add to cart, he click manully
