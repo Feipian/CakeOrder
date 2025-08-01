@@ -11,6 +11,8 @@
                 <a href="logout.php" class="btn">Logout</a>
             <?php elseif (isset($_SESSION['staff_id'])): ?>
                 <a href="admin_dashboard.php" class="btn">Dashboard</a>
+                <a href="manage_products.php" class="btn">Products</a>
+                <a href="manage_materials.php" class="btn">Materials</a>
                 <a href="logout.php" class="btn">Logout</a>
             <?php else: ?>
                 <a href="login.php" class="btn">Customer Login</a>
