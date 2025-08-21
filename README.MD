@@ -1,4 +1,10 @@
 
+Simple MariaDB backup (PowerShell)
+Usage examples:
+  powershell -ExecutionPolicy Bypass -File .\public\export-local-db.ps1 -DbName cake_shop
+  powershell -ExecutionPolicy Bypass -File .\public\export-local-db.ps1 -DbName cake_shop -Timestamp
+#>
+
 - [X] Login
 - [X] Register
 - [X] Order
@@ -26,5 +32,16 @@ choice some next product, when he want to see what he add to cart, he click manu
 - [ ] customer service can communicate with customer via anoymous call
 - [ ] when i add cake to cart want to animation
 
-admin_dashboard.php
+- [ ] Manage food safety period
+
+
+- [ ] dockerize 
+    - [ ]  ONE database for both apps
+    - [ ] make sure compose.yaml file password safety
+    - [ Not recommand ] volume local host : C:\xampp\mysql\data\cake_shop correspose to docker component
+    - [ ]  No tables found in database. 
+        - Find a solution import table
+
+
+### admin_dashboard.php
 - [ ] when admin click process this order, annote his third part app like discord or telegram or line

@@ -1,0 +1,54 @@
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./public:/var/www/html
+      - ./templates:/var/www/templates:ro
+    ports:
+      - "8080:80"
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      - DB_HOST=db
+      - DB_NAME=cake_shop
+      - DB_USER=root
+      - DB_PASSWORD=CakeShopDB2024!
+      - DB_PORT=3306
+  
+  db:
+    image: mariadb:latest
+    volumes:
+      - C:\xampp\mysql\data\cake_shop:/var/lib/mysql
+      # Note: The line below only imports initial data from cake_shop.sql on first container start.
+      # To keep cake_shop.sql updated with new data, consider running a scheduled export from the db container, e.g.:
+      # docker exec <db_container_name> sh -c 'mysqldump -u root -p"$MARIADB_ROOT_PASSWORD" cake_shop > /var/lib/mysql/cake_shop.sql'
+      # and mount a host directory for exports:
+      # - ./public/db_exports:/var/lib/mysql/db_exports
+      # - ./public/cake_shop.sql:/docker-entrypoint-initdb.d/01_schema.sql:ro
+    environment:
+      - MARIADB_ROOT_PASSWORD=CakeShopDB2024!
+      - MARIADB_DATABASE=cake_shop
+    ports:
+      - "3307:3306"
+    healthcheck:
+      test: ["CMD-SHELL", "mariadb-admin ping -h localhost -p$$MARIADB_ROOT_PASSWORD | grep 'mysqld is alive' || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+      start_period: 10s
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    ports:
+      - "8082:80"
+    environment:
+      - PMA_HOST=db
+      - PMA_PORT=3306
+      - PMA_USER=root
+      - PMA_PASSWORD=CakeShopDB2024!
+
+# volumes:
+#   db:

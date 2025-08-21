@@ -1,18 +1,7 @@
 <?php
 session_start();
 
-// Database connection (adjust credentials as needed)
-$host = 'localhost';
-$db   = 'cake_shop'; // Change to your DB name
-$user = 'root';      // Change if not root
-$pass = '';
-$charset = 'utf8mb4';
-$dsn = "mysql:host=$host;dbname=$db;charset=$charset";
-$options = [
-    PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
-    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-    PDO::ATTR_EMULATE_PREPARES   => false,
-];
+require_once 'db_connect.php';
 
 $error = '';
 
@@ -29,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $error = 'Both fields are required.';
     } else {
         try {
-            $pdo = new PDO($dsn, $user, $pass, $options);
+
             $stmt = $pdo->prepare('SELECT id, name, password FROM customer WHERE email = ?');
             $stmt->execute([$email]);
             $user = $stmt->fetch();
