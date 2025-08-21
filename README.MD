@@ -1,13 +1,18 @@
 
-Simple MariaDB backup (PowerShell)
+# Simple MariaDB backup (PowerShell)
+```
 Usage examples:
   powershell -ExecutionPolicy Bypass -File .\public\export-local-db.ps1 -DbName cake_shop
   powershell -ExecutionPolicy Bypass -File .\public\export-local-db.ps1 -DbName cake_shop -Timestamp
 #>
+```
 
 ## Auto backup
     - [X] backup ps1 file
     - [ ] write schedule file auto backup file every 5 min
+
+
+## Todo
 
 - [X] Login
 - [X] Register
