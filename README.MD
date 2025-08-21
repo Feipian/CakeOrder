@@ -5,6 +5,10 @@ Usage examples:
   powershell -ExecutionPolicy Bypass -File .\public\export-local-db.ps1 -DbName cake_shop -Timestamp
 #>
 
+## Auto backup
+    - [X] backup ps1 file
+    - [ ] write schedule file auto backup file every 5 min
+
 - [X] Login
 - [X] Register
 - [X] Order
